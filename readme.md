@@ -1,4 +1,5 @@
 
+## How to test
 
 Build the image:
 ```
@@ -26,3 +27,14 @@ Breakpoint 1, main () at test.cpp:5
 5       std::print("hello world!\n");
 ...
 ```
+## Results
+
+Works fine on an M1 and M2.
+
+On an M4:
+```
+warning: Error disabling address space randomization: Function not implemented
+Unable to fetch SVE/SSVE vector length: Invalid argument.
+```
+
+It would seems that it's impossible to debug on an Apple Silicon M3 or better with Podman.
