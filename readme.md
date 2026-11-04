@@ -29,7 +29,9 @@ Breakpoint 1, main () at test.cpp:5
 ```
 ## Results
 
-Works fine on an M1 and M2.
+Works fine on an M1 and M2 (tested).
+
+M3 - untested, but I suspect it would be the same as M4.
 
 On an M4:
 ```
@@ -37,4 +39,10 @@ warning: Error disabling address space randomization: Function not implemented
 Unable to fetch SVE/SSVE vector length: Invalid argument.
 ```
 
-It would seems that it's impossible to debug on an Apple Silicon M3 or better with Podman.
+It would seem that it's impossible to debug on an Apple Silicon M3 or better with Podman.
+Likely reason is that nested virtualisation is not enabled as this is the fix with other container technologies.
+See: https://stackoverflow.com/questions/79312200/gdb-error-unable-to-fetch-sve-ssve-vector-length-invalid-argument-on-docker
+Nested virtualisation is only available with M3 or better so M1/M2 work fine.
+
+Podman uses `vfkit` to setup its virtual machine and I could not find a way to setup Podman so that it send the `nested` argument to `vfkit`.
+https://github.com/crc-org/vfkit/blob/3c1abf3e3a8c2864892462832924da73b9df7e42/pkg/cmdline/cmdline.go#L63
